@@ -24,8 +24,8 @@ class Node:
     """
 
     def __init__(self, data: tuple[int, int]):
-        # Replace the line below with your code
-        raise NotImplementedError
+        self._data = data
+        self.next = None
 
     def __repr__(self) -> str:
         return f'Node({self.get()})'
@@ -39,9 +39,7 @@ class Node:
         Return
             tuple[int, int]
         """
-        # Replace the line below with your code
-        raise NotImplementedError
-
+        return self._data
 
 class LinkedList:
     """Represents a sequence of data items.
@@ -75,8 +73,12 @@ class LinkedList:
         Return
             length of linkedlist as an integer (zero or positive)
         """
-        # Replace the line below with your code
-        raise NotImplementedError
+        current = self._head
+        size = 0
+        while current is not None:
+            current = current.next
+            size += 1
+        return size
 
     def get(self, n: int) -> tuple[int, int]:
         """Returns item at n-th node.
@@ -92,8 +94,16 @@ class LinkedList:
             IndexError if n > length
         """
         # Replace the line below with your code
-        raise NotImplementedError
-
+        
+        current = self._head
+        index = 0
+        while current is not None:
+            if index == n:
+                return current.get()
+            current = current.next
+            index += 1
+        raise IndexError
+        
     def insert(self, n: int, item: tuple[int, int]) -> None:
         """Insert item into linkedlist at position n.
 
@@ -107,9 +117,33 @@ class LinkedList:
         Raises
             IndexError if n > length
         """
-        # Replace the line below with your code
-        raise NotImplementedError
+        if n > self.length():
+            raise IndexError
+        previous = None
+        current = self._head
+        index = 0
+        while True:
+            if index == n:
+                # found the index to add the element
+                item_node = Node(item)
+                if previous is None:
+                    self._head = item_node
+                    item_node.next = current
+                elif current is None:
+                    previous.next = item_node
+                else:
+                    previous.next = item_node
+                    item_node.next = current
 
+                # Found correct index to insert, stop now
+                return
+            elif current is None:
+                # Reached past the end of the linked list, stop now.
+                return
+            previous = current
+            current = current.next
+            index += 1
+                
     def append(self, item: tuple[int, int]) -> None:
         """Append item at the end of linkedlist.
 
@@ -121,8 +155,17 @@ class LinkedList:
             None
         """
         # Replace the line below with your code
-        raise NotImplementedError
-
+        
+        current = self._head
+        item_node = Node(item)
+        # Empty LinkedList
+        if current is None:
+            self._head = item_node
+            return
+        while current.next is not None:
+            current = current.next
+        current.next = item_node
+        
     def delete(self, n: int) -> None:
         """Delete n-th item from linkedlist.
 
@@ -134,8 +177,26 @@ class LinkedList:
             IndexError if n > length
         """
         # Replace the line below with your code
-        raise NotImplementedError
-       
+        previous = None
+        current = self._head
+        index = 0
+        while current is not None:
+            if index == n:
+                if previous is None:
+                    # First node is stored in LinkedList object
+                    # Make _head point to its next node instead
+                    self._head = current.next
+                else:
+                    # Node is stored in another node
+                    # Set previous node to point to current's next node instead
+                    previous.next = current.next
+                # Deleted element, stop now    
+                return
+            previous = current
+            current = current.next
+            index += 1
+        raise IndexError
+    
     def contains(self, item: tuple[int, int]) -> bool:
         """Checks whether an item is in the linkedlist.
         Returns a boolean value to indicate the status of the search.
@@ -148,11 +209,26 @@ class LinkedList:
             True if item is found in the linkedlist,
             otherwise False
         """
-        # Replace the line below with your code
-        raise NotImplementedError
+        
+        current = self._head
+        while current is not None:
+            if current.get() == item:
+                return True
+            current = current.next
+        return False
 
 
 if __name__ == "__main__":
     # Write any test code here and run it with
     # `python datastruct.py`
-    pass
+    ll = LinkedList()
+    ll.append((4,5))
+    ll.insert(0, (1,2))
+    # ll.insert(1, (3, 69))
+
+    print(ll.get(0))
+    print(ll.get(1))
+    # print(ll.get(2))
+    print(ll.length())
+
+
