@@ -91,7 +91,7 @@ class LinkedList:
             item
 
         Raises
-            IndexError if n > length
+            IndexError if n >= length
         """
         # Replace the line below with your code
         
@@ -174,7 +174,7 @@ class LinkedList:
               sequence number of item to be retrieved.
 
         Raises
-            IndexError if n > length
+            IndexError if n >= length
         """
         # Replace the line below with your code
         previous = None
