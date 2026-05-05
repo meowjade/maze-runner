@@ -117,6 +117,13 @@ class LinkedList:
         Raises
             IndexError if n > length
         """
+
+        if n == 0:
+            item_node = Node(item)
+            current = self._head
+            self._head = item_node
+            item_node.next = current
+            return
         
         previous = None
         current = self._head
@@ -125,10 +132,7 @@ class LinkedList:
             if index == n:
                 # found the index to add the element
                 item_node = Node(item)
-                if previous is None:
-                    self._head = item_node
-                    item_node.next = current
-                elif current is None:
+                if current is None:
                     previous.next = item_node
                 else:
                     previous.next = item_node
@@ -176,21 +180,18 @@ class LinkedList:
         Raises
             IndexError if n >= length
         """
+        if n == 0:
+            self._head = self._head.next
+            return
+
         # Replace the line below with your code
         previous = None
         current = self._head
         index = 0
         while current is not None:
             if index == n:
-                if previous is None:
-                    # First node is stored in LinkedList object
-                    # Make _head point to its next node instead
-                    self._head = current.next
-                else:
-                    # Node is stored in another node
-                    # Set previous node to point to current's next node instead
-                    previous.next = current.next
-                # Deleted element, stop now    
+                # Set previous node to point to current's next node instead
+                previous.next = current.next    
                 return
             previous = current
             current = current.next
