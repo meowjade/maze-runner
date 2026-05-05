@@ -117,8 +117,7 @@ class LinkedList:
         Raises
             IndexError if n > length
         """
-        if n > self.length():
-            raise IndexError
+        
         previous = None
         current = self._head
         index = 0
@@ -138,11 +137,12 @@ class LinkedList:
                 # Found correct index to insert, stop now
                 return
             elif current is None:
-                # Reached past the end of the linked list, stop now.
-                return
+                # Reached past the end of the linked list, raise error.
+                raise IndexError
             previous = current
             current = current.next
             index += 1
+
                 
     def append(self, item: tuple[int, int]) -> None:
         """Append item at the end of linkedlist.
