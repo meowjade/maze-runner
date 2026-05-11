@@ -93,7 +93,8 @@ class LinkedList:
         Raises
             IndexError if n >= length
         """
-        # Replace the line below with your code
+        if n < 0:
+            raise IndexError
         
         current = self._head
         index = 0
@@ -117,6 +118,8 @@ class LinkedList:
         Raises
             IndexError if n > length
         """
+        if n < 0:
+            raise IndexError
 
         if n == 0:
             item_node = Node(item)
@@ -180,6 +183,9 @@ class LinkedList:
         Raises
             IndexError if n >= length
         """
+        if n < 0:
+            raise IndexError
+            
         if n == 0:
             self._head = self._head.next
             return
