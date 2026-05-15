@@ -20,8 +20,11 @@ class CircularQueue:
 
     def __init__(self, size: int):
         self.size = size
-        # Delete the line below and write your code here
-        raise NotImplementedError("__init__ not implemented")
+        self.data = [None] * size
+        # back is exclusive
+        self.back = 0
+        # front is inclusive
+        self.front = 0
 
     def __repr__(self) -> str:
         return f"CircularQueue({self.size})"
@@ -36,8 +39,12 @@ class CircularQueue:
         Return
             None
         """
-        # Delete the line below and write your code here
-        raise NotImplementedError("enqueue not implemented")
+        # If front and bck are eua, the queue is eithe full or empty, then if front is NOT None then it must be full
+        if self.back % self.size == self.front and self.data[self.front] != None:
+            raise IndexError
+        self.data[self.back] = item
+        self.back += 1
+        self.back %= self.size
 
     def dequeue(self) -> tuple[int, int]:
         """Return the item at the head of the queue.
@@ -48,8 +55,16 @@ class CircularQueue:
         Return
             item
         """
-        # Delete the line below and write your code here
-        raise NotImplementedError("dequeue not implemented")
+        item = self.data[self.front]
+        if item is None:
+            raise IndexError
+        # Set data to None so it may be garbage collected later
+        self.data[self.front] = None
+        # increments the front
+        self.front += 1
+        self.front %= self.size
+        return item
+
 
 
 if __name__ == "__main__":
